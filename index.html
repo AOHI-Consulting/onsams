@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#FFF8F1"><meta name="description" content="For Amsterdam, by everyone. A social-currency app concept: earn points by giving back, spend them locally, and let residents decide what the points pay for. Student prototype by Team 5."><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23F26A1F'/%3E%3Cpath d='M32 13l5.6 11.4 12.6 1.8-9.1 8.9 2.1 12.5L32 41.7l-11.2 5.9 2.1-12.5-9.1-8.9 12.6-1.8z' fill='%23FFC46B'/%3E%3C/svg%3E"><meta property="og:title" content="OnsAms: try the beta"><meta property="og:description" content="For Amsterdam, by everyone. A social-currency app concept: earn points by giving back, spend them locally, and let residents decide what the points pay for. Student prototype by Team 5."><meta property="og:type" content="website"><meta property="og:url" content="https://aohi-consulting.github.io/onsams/"><meta property="og:image" content="https://aohi-consulting.github.io/onsams/og-image.png"><meta name="twitter:card" content="summary_large_image"><title>OnsAms</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#FFF8F1"><meta name="description" content="For Amsterdam, by everyone. A social-currency app concept: earn points by giving back, spend them locally, and let residents decide what the points pay for. Student prototype by Team 5."><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23F26A1F'/%3E%3Cpath d='M32 13l5.6 11.4 12.6 1.8-9.1 8.9 2.1 12.5L32 41.7l-11.2 5.9 2.1-12.5-9.1-8.9 12.6-1.8z' fill='%23FFC46B'/%3E%3C/svg%3E"><meta property="og:title" content="OnsAms: try the beta"><meta property="og:description" content="For Amsterdam, by everyone. A social-currency app concept: earn points by giving back, spend them locally, and let residents decide what the points pay for. Student prototype by Team 5."><meta property="og:type" content="website"><meta property="og:url" content="https://aohi-consulting.github.io/onsams/"><meta property="og:image" content="https://aohi-consulting.github.io/onsams/og-image.png"><meta name="twitter:card" content="summary_large_image"><script>if(location.protocol==='https:'){var l=document.createElement('link');l.rel='manifest';l.href='manifest.webmanifest';document.head.appendChild(l);}</script><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="OnsAms"><link rel="apple-touch-icon" href="icon-180.png"><script>if('serviceWorker' in navigator && location.protocol==='https:' && window.self===window.top){addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}</script><title>OnsAms</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700;800&display=swap">
@@ -110,19 +110,20 @@ p { margin: 0; }
 .tab-center.on .tab-ic { background: var(--orange-deep); }
 
 /* ---------- page transitions ---------- */
-@keyframes in-fwd { from { transform: translateX(28px); opacity: 0; } to { transform: none; opacity: 1; } }
-@keyframes in-back { from { transform: translateX(-28px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes in-fwd { from { transform: translateX(36px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes in-back { from { transform: translateX(-30px); opacity: 0; } to { transform: none; opacity: 1; } }
 @keyframes in-fade { from { opacity: 0; } to { opacity: 1; } }
-.page.dir-fwd { animation: in-fwd .26s ease-out; }
-.page.dir-back { animation: in-back .26s ease-out; }
-.page.dir-none { animation: in-fade .2s ease-out; }
+.page.dir-fwd { animation: in-fwd .32s cubic-bezier(.22, .9, .24, 1); }
+.page.dir-back { animation: in-back .3s cubic-bezier(.22, .9, .24, 1); }
+.page.dir-none { animation: in-fade .22s ease-out; }
 
 /* ---------- sheet ---------- */
 .sheet-wrap { position: absolute; inset: 0; z-index: 20; display: flex; flex-direction: column; justify-content: flex-end; }
 .sheet-backdrop { position: absolute; inset: 0; background: rgba(31, 26, 23, 0.42); animation: in-fade .2s ease-out; }
 .sheet { position: relative; background: var(--paper); border-radius: var(--r-xl) var(--r-xl) 0 0; max-height: 90%; display: flex; flex-direction: column; animation: sheet-up .28s cubic-bezier(.2, .8, .2, 1); box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.15); }
 @keyframes sheet-up { from { transform: translateY(40%); opacity: .4; } to { transform: none; opacity: 1; } }
-.sheet-grab { width: 42px; height: 5px; border-radius: 99px; background: var(--line); margin: 8px auto 0; flex: none; position: absolute; left: 0; right: 0; top: 0; z-index: 2; }
+.sheet-drag { position: absolute; left: 0; right: 64px; top: 0; height: 34px; z-index: 3; display: flex; justify-content: center; padding-top: 8px; padding-left: 64px; touch-action: none; cursor: grab; }
+.sheet-grab { display: block; width: 42px; height: 5px; border-radius: 99px; background: rgba(31, 26, 23, 0.22); }
 .sheet-x { position: absolute; top: 10px; right: 10px; z-index: 3; background: rgba(255, 255, 255, 0.92); box-shadow: var(--shadow-s); }
 .sheet-scroll { overflow-y: auto; border-radius: var(--r-xl) var(--r-xl) 0 0; padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
 .sheet-body .sheet-art { height: 180px; border-radius: 0; }
@@ -267,6 +268,45 @@ p { margin: 0; }
 
 /* status bar follows full-bleed coloured screens in the desktop frame */
 .device:has(.page[data-screen="ticket"]) > .statusbar { background: var(--orange); color: #fff; }
+
+/* ---------- motion kit (shared) ---------- */
+/* Entrance stagger: put .oa-stagger on a container; its children rise in one after another.
+   Set style="--i:N" on a child to control its order explicitly. */
+@keyframes oa-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.oa-stagger > * { animation: oa-rise .46s cubic-bezier(.22, .9, .24, 1) both; animation-delay: calc(var(--i, 0) * 50ms + 40ms); }
+.oa-stagger > :nth-child(1) { --i: 0; } .oa-stagger > :nth-child(2) { --i: 1; } .oa-stagger > :nth-child(3) { --i: 2; }
+.oa-stagger > :nth-child(4) { --i: 3; } .oa-stagger > :nth-child(5) { --i: 4; } .oa-stagger > :nth-child(6) { --i: 5; }
+.oa-stagger > :nth-child(7) { --i: 6; } .oa-stagger > :nth-child(8) { --i: 7; } .oa-stagger > :nth-child(n+9) { --i: 8; }
+.oa-pop { animation: oa-pop .42s cubic-bezier(.3, 1.6, .5, 1) both; }
+@keyframes oa-pop { from { transform: scale(.6); opacity: 0; } to { transform: none; opacity: 1; } }
+/* Press feedback on everything tappable */
+.tile, .row, .chip, .seg-o, .iconbtn, .pts-pill, .tab { transition: transform .14s cubic-bezier(.2, .8, .2, 1), background .15s, box-shadow .15s; }
+.tile:active { transform: scale(.975); }
+.row:active:not(:disabled) { transform: scale(.985); }
+.chip:active, .seg-o:active, .pts-pill:active { transform: scale(.95); }
+.iconbtn:active { transform: scale(.9); }
+@media (hover: hover) { .tile:hover { box-shadow: 0 10px 26px rgba(87, 45, 14, 0.18); transform: translateY(-2px); } }
+/* Tab bar: the newly selected icon gives a small bounce */
+.tab.on .tab-ic .ms { animation: tab-pop .38s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes tab-pop { 0% { transform: scale(.7); } 100% { transform: none; } }
+/* Counting numbers keep their width steady */
+.num { font-variant-numeric: tabular-nums; }
+.pts-pill .num.counting { color: var(--sun); }
+/* Progress bars fill in on mount */
+.prog > span { animation: prog-fill .8s cubic-bezier(.22, .9, .24, 1) both; transform-origin: left center; }
+@keyframes prog-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+/* Confetti for the points burst */
+.burst-confetti { position: absolute; left: 50%; top: 50%; width: 0; height: 0; }
+.cf { position: absolute; left: -5px; top: -5px; width: 10px; height: 10px; opacity: 0; animation: cf-fly 1.25s cubic-bezier(.15, .7, .3, 1) both; animation-delay: var(--d); }
+.cf-rect { width: 8px; height: 13px; border-radius: 2px; }
+.cf-round { border-radius: 50%; }
+@keyframes cf-fly {
+  0% { transform: translate(0, 0) rotate(0) scale(.4); opacity: 0; }
+  12% { opacity: 1; }
+  70% { transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(1); opacity: 1; }
+  100% { transform: translate(var(--x), calc(var(--y) + 70px)) rotate(calc(var(--r) * 1.6)) scale(.9); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .burst-confetti { display: none; } .oa-stagger > * { animation: none; } }
 
 /* ---- earnuse.css ---- */
 /* OnsAms beta: earnuse module (Earn, ticket, Use, chat, done). Every class is prefixed eu-.
@@ -1774,26 +1814,98 @@ p { margin: 0; }
   function emitNav() { navSubs.slice().forEach(function (f) { f(nav); }); }
   function track(name) { var v = Object.assign({}, state.visited); v[name] = (v[name] || 0) + 1; state = Object.assign({}, state, { visited: v }); save(KEY, state); }
   OA.homeRoute = function () { return state.role === 'resident' ? 'r-home' : 'v-home'; };
+  /* Browser history. On a real phone the system back gesture (Android back, iOS swipe) should step back
+     inside the app instead of leaving it. Only used when the app is the top-level page (GitHub Pages);
+     inside the artifact viewer the app stays out of the browser history.
+     The app changes its own state immediately; history is kept in step, and the popstate events the app
+     causes itself are ignored. A popstate the app did not cause is the user's back gesture. */
+  var useHist = (function () { try { return window.self === window.top && !!(window.history && history.pushState); } catch (e) { return false; } })();
+  var ignorePops = 0, pending = 0, flushT = null, traversing = false, deferredPush = 0, travT = null;
+  function entries() { return (nav.stack.length - 1) + (nav.sheet && nav.sheet.hist ? 1 : 0); }
+  // History is kept in step with the app, carefully:
+  // - Going back is deferred a moment and coalesced (Chrome resolves history.go() against the entry that is current
+  //   when it is called, so "close the sheet, then open a page" in one tap would otherwise lose the page's entry).
+  // - A push requested while a back is pending cancels that back instead (the entry is simply reused).
+  // - While the browser is still stepping back, new pushes wait until it lands (slow phones would otherwise lose them).
+  function flush() {
+    flushT = null;
+    if (traversing || pending <= 0) return;
+    var n = pending; pending = 0;
+    traversing = true; ignorePops++;
+    try { history.go(-n); } catch (e) { landed(); return; }
+    clearTimeout(travT); travT = setTimeout(function () { if (traversing) { ignorePops = Math.max(0, ignorePops - 1); landed(); } }, 1500);
+  }
+  function landed() {
+    traversing = false; clearTimeout(travT);
+    while (deferredPush > 0) { deferredPush--; try { history.pushState({ oa: seq }, ''); } catch (e) {} }
+    if (pending > 0 && !flushT) flushT = setTimeout(flush, 0);
+  }
+  function histBack(n) {
+    if (!useHist || n <= 0) return;
+    while (n > 0 && deferredPush > 0) { deferredPush--; n--; }   // a back that cancels a push still waiting
+    if (n <= 0) return;
+    pending += n;
+    if (!flushT && !traversing) flushT = setTimeout(flush, 60);
+  }
+  function histPush() {
+    if (!useHist) return false;
+    if (pending > 0) { pending--; return true; }                    // reuse the entry a pending back would remove
+    if (traversing) { deferredPush++; return true; }
+    try { history.pushState({ oa: seq }, ''); return true; } catch (e) { return false; }
+  }
+  function saveScroll() { var v = document.getElementById('oa-viewport'), top = nav.stack[nav.stack.length - 1]; if (v && top) top.scroll = v.scrollTop; }
+  function popInternal() {
+    if (nav.sheet) { nav.sheet = null; emitNav(); return true; }
+    if (nav.stack.length > 1) { nav.stack = nav.stack.slice(0, -1); nav.dir = 'back'; emitNav(); return true; }
+    return false;
+  }
+  if (useHist) window.addEventListener('popstate', function () {
+    if (ignorePops > 0) { ignorePops--; landed(); return; }
+    popInternal();
+  });
+
   OA.nav = {
-    go: function (name, params) { nav.stack = nav.stack.concat([{ name: name, params: params || {}, key: ++seq }]); nav.dir = 'fwd'; nav.sheet = null; track(name); emitNav(); },
-    replace: function (name, params) { nav.stack = nav.stack.slice(0, -1).concat([{ name: name, params: params || {}, key: ++seq }]); nav.dir = 'fwd'; nav.sheet = null; track(name); emitNav(); },
-    back: function () {
-      if (nav.sheet) { nav.sheet = null; emitNav(); return; }
-      if (nav.stack.length > 1) { nav.stack = nav.stack.slice(0, -1); nav.dir = 'back'; emitNav(); }
-      else OA.nav.home();
+    go: function (name, params) {
+      saveScroll();
+      // an open sheet's history entry becomes the new page's entry
+      if (!(nav.sheet && nav.sheet.hist)) histPush();
+      nav.stack = nav.stack.concat([{ name: name, params: params || {}, key: ++seq }]); nav.dir = 'fwd'; nav.sheet = null; track(name); emitNav();
     },
-    reset: function (name, params) { nav.stack = [{ name: name, params: params || {}, key: ++seq }]; nav.dir = 'none'; nav.sheet = null; track(name); emitNav(); },
+    replace: function (name, params) {
+      if (nav.sheet && nav.sheet.hist) histBack(1);
+      nav.stack = nav.stack.slice(0, -1).concat([{ name: name, params: params || {}, key: ++seq }]); nav.dir = 'fwd'; nav.sheet = null; track(name); emitNav();
+    },
+    back: function () {
+      var n = entries();
+      if (popInternal()) { histBack(n > 0 ? 1 : 0); return; }
+      OA.nav.home();
+    },
+    reset: function (name, params) {
+      var n = entries();
+      nav.stack = [{ name: name, params: params || {}, key: ++seq }]; nav.dir = 'none'; nav.sheet = null; track(name); emitNav();
+      histBack(n);
+    },
     home: function () { OA.nav.reset(OA.homeRoute()); },
     tab: function (tabId) {
       var tabs = OA.tabs[state.role === 'resident' ? 'resident' : 'visitor'];
       for (var i = 0; i < tabs.length; i++) if (tabs[i].id === tabId) return OA.nav.reset(tabs[i].route);
     },
     // sheet(() => html`...`, {title}) opens a bottom sheet over the current screen
-    sheet: function (render, opts) { nav.sheet = { render: render, opts: opts || {}, key: ++seq }; emitNav(); },
-    closeSheet: function () { if (nav.sheet) { nav.sheet = null; emitNav(); } },
+    sheet: function (render, opts) {
+      var hist = nav.sheet ? nav.sheet.hist : histPush();
+      nav.sheet = { render: render, opts: opts || {}, key: ++seq, hist: hist }; emitNav();
+    },
+    closeSheet: function () {
+      if (!nav.sheet) return;
+      var hist = nav.sheet.hist;
+      nav.sheet = null; emitNav();
+      if (hist) histBack(1);
+    },
     current: function () { return nav.stack[nav.stack.length - 1]; },
     depth: function () { return nav.stack.length; },
-    state: function () { return nav; }
+    state: function () { return nav; },
+    usesHistory: function () { return useHist; },
+    _debug: function () { return { ignorePops: ignorePops, pending: pending, traversing: traversing, deferred: deferredPush, entries: entries(), length: history.length, state: history.state }; }
   };
   OA.useNav = function () {
     var r = useState(0), force = r[1];
@@ -1823,6 +1935,13 @@ p { margin: 0; }
     ]
   };
 
+  /* ---------- motion helpers ---------- */
+  OA.reducedMotion = function () { try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } };
+  // A short vibration on Android phones (iOS ignores it). pattern: ms or [on, off, on]
+  OA.haptic = function (pattern) { try { if (navigator.vibrate) navigator.vibrate(pattern || 12); } catch (e) {} };
+  // Remembers the last number each CountUp showed, so a counter that remounts on a new screen still animates the change.
+  var countMem = {};
+
   /* ---------- toast + points burst ---------- */
   var toastTimer, burstTimer;
   OA.toast = function (text, opts) {
@@ -1833,7 +1952,8 @@ p { margin: 0; }
   OA.burst = function (pts, label) {
     clearTimeout(burstTimer);
     nav.burst = { pts: pts, label: label || 'points earned', key: ++seq }; emitNav();
-    burstTimer = setTimeout(function () { nav.burst = null; emitNav(); }, 1700);
+    OA.haptic([14, 50, 22]);
+    burstTimer = setTimeout(function () { nav.burst = null; emitNav(); }, 1900);
   };
 
   /* ---------- illustrations fallback (art.js replaces OA.art) ---------- */
@@ -1882,7 +2002,7 @@ p { margin: 0; }
       <div class="wordmark" aria-label="OnsAms">OnsAms</div>
       ${p.title && html`<div class="topbar-title">${p.title}</div>`}
       <button type="button" class="pts-pill" onClick=${function () { OA.nav.tab('me'); }} aria-label=${'You have ' + OA.fmt.pts(s.points) + ' points'}>
-        <${ui.Icon} name="star" fill size=${18}/>${OA.fmt.pts(s.points)}</button>
+        <${ui.Icon} name="star" fill size=${18}/><${ui.CountUp} value=${s.points} id="balance"/></button>
     </header>`;
   };
   ui.Section = function (p) {
@@ -1895,6 +2015,30 @@ p { margin: 0; }
   ui.Rail = function (p) { return html`<div class=${cx('rail', p.class)} role="list">${p.children}</div>`; };
   ui.Pts = function (p) {
     return html`<span class=${cx('ptsb', p.kind && 'ptsb-' + p.kind)}>${p.plus ? '+' : ''}${OA.fmt.pts(p.pts)} pts${p.note ? html` <small>${p.note}</small>` : ''}</span>`;
+  };
+  // Animated number. <${ui.CountUp} value=${s.points} id="balance"/> counts from the last shown value to the new one.
+  // id: remember the last value across remounts (so the balance animates after you come back from a check-in).
+  ui.CountUp = function (p) {
+    var v = Math.round(p.value || 0);
+    var startVal = p.id && countMem[p.id] != null ? countMem[p.id] : v;
+    var r = useState(startVal), shown = r[0], setShown = r[1];
+    var from = useRef(startVal);
+    useEffect(function () {
+      var start = from.current, end = v, raf;
+      if (start === end || OA.reducedMotion()) { from.current = end; setShown(end); if (p.id) countMem[p.id] = end; return; }
+      var t0 = 0, dur = p.ms || Math.min(1100, 450 + Math.abs(end - start) * 0.6);
+      var step = function (t) {
+        if (!t0) t0 = t;
+        var k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+        var cur = Math.round(start + (end - start) * e);
+        setShown(cur); if (p.id) countMem[p.id] = cur;
+        if (k < 1) raf = requestAnimationFrame(step); else from.current = end;
+      };
+      raf = requestAnimationFrame(step);
+      return function () { cancelAnimationFrame(raf); from.current = end; if (p.id) countMem[p.id] = end; };
+    }, [v]);
+    var fmt = p.format || OA.fmt.pts;
+    return html`<span class=${cx('num', p.class, shown !== v && 'counting')}>${fmt(shown)}</span>`;
   };
   // Illustration panel.
   ui.Art = function (p) {
@@ -7186,19 +7330,59 @@ p { margin: 0; }
 
   function SheetHost(p) {
     var sh = p.sheet;
+    var sheetRef = useRef(null), backRef = useRef(null), drag = useRef(null);
     useEffect(function () {
       var onKey = function (e) { if (e.key === 'Escape') OA.nav.closeSheet(); };
       document.addEventListener('keydown', onKey);
+      // move focus into the sheet for keyboard and screen-reader users
+      var el = sheetRef.current; if (el) { var f = el.querySelector('.sheet-x'); if (f) f.focus({ preventScroll: true }); }
       return function () { document.removeEventListener('keydown', onKey); };
     }, []);
+    // Swipe down on the handle area to close (follows the finger; a short fast flick also closes).
+    function down(e) {
+      if (e.button != null && e.button !== 0) return;
+      drag.current = { y0: e.clientY, t0: performance.now(), dy: 0 };
+      try { e.currentTarget.setPointerCapture(e.pointerId); } catch (x) {}
+      if (sheetRef.current) sheetRef.current.style.transition = 'none';
+    }
+    function move(e) {
+      var d = drag.current; if (!d) return;
+      d.dy = Math.max(0, e.clientY - d.y0);
+      var el = sheetRef.current; if (el) el.style.transform = 'translateY(' + d.dy + 'px)';
+      if (backRef.current) backRef.current.style.opacity = String(Math.max(0.15, 1 - d.dy / 500));
+    }
+    function up() {
+      var d = drag.current; drag.current = null; if (!d) return;
+      var el = sheetRef.current; if (!el) return;
+      var v = d.dy / Math.max(1, performance.now() - d.t0);
+      el.style.transition = 'transform .26s cubic-bezier(.2,.8,.2,1)';
+      if (d.dy > 120 || (d.dy > 40 && v > 0.6)) {
+        el.style.transform = 'translateY(105%)';
+        if (backRef.current) { backRef.current.style.transition = 'opacity .26s'; backRef.current.style.opacity = '0'; }
+        setTimeout(OA.nav.closeSheet, 230);
+      } else {
+        el.style.transform = '';
+        if (backRef.current) backRef.current.style.opacity = '';
+      }
+    }
     return html`<div class="sheet-wrap" key=${sh.key}>
-      <div class="sheet-backdrop" onClick=${OA.nav.closeSheet}></div>
-      <div class="sheet" role="dialog" aria-modal="true" aria-label=${sh.opts.title || 'Details'}>
-        <div class="sheet-grab" aria-hidden="true"></div>
+      <div class="sheet-backdrop" ref=${backRef} onClick=${OA.nav.closeSheet}></div>
+      <div class="sheet" role="dialog" aria-modal="true" aria-label=${sh.opts.title || 'Details'} ref=${sheetRef}>
+        <div class="sheet-drag" onPointerDown=${down} onPointerMove=${move} onPointerUp=${up} onPointerCancel=${up} aria-hidden="true"><span class="sheet-grab"></span></div>
         <button type="button" class="sheet-x iconbtn" aria-label="Close" onClick=${OA.nav.closeSheet}><${ui.Icon} name="close"/></button>
         <div class="sheet-scroll">${sh.render()}</div>
       </div></div>`;
   }
+
+  /* Confetti for the points burst: fixed pseudo-random spread so it looks the same every time. */
+  var CONFETTI = (function () {
+    var cols = ['#F26A1F', '#FFC46B', '#4E9A66', '#7FB2C9', '#D9667B', '#FFF4EA'], out = [];
+    for (var i = 0; i < 18; i++) {
+      var ang = (i / 18) * Math.PI * 2 + (i % 3) * 0.21, dist = 110 + (i * 37) % 70;
+      out.push({ x: Math.round(Math.cos(ang) * dist), y: Math.round(Math.sin(ang) * dist * 0.8 - 30), r: (i * 47) % 360, c: cols[i % cols.length], d: (i % 5) * 18, s: i % 2 ? 'round' : 'rect' });
+    }
+    return out;
+  })();
 
   function StatusBar() {
     var r = useState(new Date()), now = r[0], setNow = r[1];
@@ -7214,7 +7398,8 @@ p { margin: 0; }
     var def = OA.screens[cur.name] || { Comp: Missing, bar: true, tab: null };
     var showBar = s.onboarded && def.bar !== false;
     var scroller = useRef(null);
-    useEffect(function () { if (scroller.current) scroller.current.scrollTop = 0; }, [cur.key]);
+    // back restores where you were in the list; anything else starts at the top
+    useEffect(function () { if (scroller.current) scroller.current.scrollTop = (nav.dir === 'back' && cur.scroll) || 0; }, [cur.key]);
     return html`<div class=${OA.cx('device', showBar && 'has-bar', nav.sheet && 'has-sheet')}>
       <${StatusBar}/>
       <main class="viewport" ref=${scroller} id="oa-viewport">
@@ -7225,7 +7410,11 @@ p { margin: 0; }
       ${showBar && html`<${TabBar} active=${def.tab}/>`}
       ${nav.sheet && html`<${SheetHost} sheet=${nav.sheet}/>`}
       ${nav.toast && html`<div class="toast" role="status" key=${nav.toast.key}><${ui.Icon} name=${nav.toast.icon} fill/>${nav.toast.text}</div>`}
-      ${nav.burst && html`<div class="burst" role="status" key=${nav.burst.key}><div class="burst-star"><${ui.Icon} name="star" fill size=${54}/></div>
+      ${nav.burst && html`<div class="burst" role="status" key=${nav.burst.key}>
+        <div class="burst-confetti" aria-hidden="true">${CONFETTI.map(function (c) {
+          return html`<i class=${'cf cf-' + c.s} style=${'--x:' + c.x + 'px;--y:' + c.y + 'px;--r:' + c.r + 'deg;--d:' + c.d + 'ms;background:' + c.c}></i>`;
+        })}</div>
+        <div class="burst-star"><${ui.Icon} name="star" fill size=${54}/></div>
         <div class="burst-n">+${OA.fmt.pts(nav.burst.pts)}</div><div class="burst-l">${nav.burst.label}</div></div>`}
     </div>`;
   }
