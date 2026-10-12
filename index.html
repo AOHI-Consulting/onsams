@@ -2,7 +2,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0..1,0&amp;icon_names=account_balance,add,add_circle,agriculture,apps,arrow_back,arrow_downward,arrow_forward,arrow_upward,autorenew,bar_chart,battery_full,bedtime,bolt,bookmark,bookmark_add,bookmark_added,celebration,chat,check,check_circle,chevron_right,close,confirmation_number,construction,content_copy,delete,delete_sweep,diversity_3,eco,edit,edit_note,emoji_nature,error,event,event_available,explore,favorite,format_quote,forum,give,group_add,groups,groups_3,handshake,heron,home,hotel,houses,how_to_reg,how_to_vote,hub,inbox,info,ios_share,light_mode,lightbulb,link,local_florist,location_on,lock,lock_open,luggage,map,more_horiz,my_location,nature_people,nights_stay,palette,park,payments,person,person_add,photo_camera,play_arrow,potted_plant,qr_code_2,radio_button_unchecked,rate_review,redeem,refresh,remove,replay,restart_alt,restaurant,room_service,schedule,school,search,search_off,select_all,self_improvement,sell,send,sentiment_satisfied,shopping_bag,signal_cellular_alt,spa,star,sticky_note_2,stop,storefront,swap_horiz,timer,touch_app,train,travel_explore,visibility,volume_up,volunteer_activism,vote,wallet,warning,water,water_drop,wb_twilight,welcome,wifi&amp;display=block">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0..1,0&amp;icon_names=account_balance,add,add_circle,agriculture,apps,arrow_back,arrow_downward,arrow_forward,arrow_upward,autorenew,bar_chart,battery_full,bedtime,bolt,bookmark,bookmark_add,bookmark_added,celebration,chat,check,check_circle,chevron_right,close,confirmation_number,construction,content_copy,delete,delete_sweep,diversity_3,eco,edit,edit_note,emoji_nature,error,event,event_available,explore,favorite,format_quote,forum,give,group_add,groups,groups_3,handshake,heron,home,hotel,houses,how_to_reg,how_to_vote,hub,inbox,info,ios_share,light_mode,lightbulb,link,local_florist,location_off,location_on,lock,lock_open,luggage,map,more_horiz,my_location,nature_people,nights_stay,no_photography,palette,park,payments,person,person_add,photo_camera,play_arrow,potted_plant,priority_high,qr_code_2,radio_button_unchecked,rate_review,redeem,refresh,remove,replay,restart_alt,restaurant,room_service,schedule,school,search,search_off,select_all,self_improvement,sell,send,sentiment_satisfied,shopping_bag,signal_cellular_alt,spa,star,sticky_note_2,stop,storefront,swap_horiz,theater_comedy,timer,touch_app,train,travel_explore,videocam_off,visibility,volume_up,volunteer_activism,vote,wallet,warning,water,water_drop,wb_twilight,welcome,wifi&amp;display=block">
 <style>
 /* ---- base.css ---- */
 /* OnsAms beta: base styles and UI kit. Owned by the lead.
@@ -434,6 +434,38 @@ html:not(.oa-framed) .page { max-width: 640px; margin-inline: auto; }
 .pp-tpts { position: absolute; right: 5px; top: 5px; font: 800 0.65rem/1 var(--f-body); background: rgba(255, 255, 255, 0.92); color: var(--orange-deep); padding: 4px 6px; border-radius: 99px; }
 .pp-view .pp-big { width: 100%; border-radius: var(--r-l); max-height: 52vh; object-fit: cover; margin-top: 18px; }
 @media (prefers-reduced-motion: reduce) { .pp-line { animation: none; opacity: .5; } }
+/* live camera + checks */
+.cam { display: flex; flex-direction: column; gap: 10px; }
+.cam-view { position: relative; border-radius: var(--r-l); overflow: hidden; background: #111; aspect-ratio: 4 / 3; max-width: 100%; }
+.cam-video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cam-wait { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: #fff; font-weight: 600; }
+.cam-live { position: absolute; left: 10px; top: 10px; display: inline-flex; align-items: center; gap: 6px; background: rgba(0, 0, 0, 0.55); color: #fff; font: 700 var(--fs-xs)/1 var(--f-body); padding: 6px 9px; border-radius: 99px; }
+.cam-live i { width: 8px; height: 8px; border-radius: 50%; background: #E5484D; animation: cam-blink 1.2s infinite; }
+@keyframes cam-blink { 50% { opacity: .3; } }
+.cam-hint { position: absolute; left: 10px; right: 10px; bottom: 10px; color: #fff; font-size: var(--fs-s); font-weight: 600; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6); text-align: center; }
+.cam-bar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; }
+.cam-bar > :first-child { justify-self: start; } .cam-bar > :last-child { justify-self: end; }
+.cam-shutter { width: 68px; height: 68px; border-radius: 50%; border: 4px solid var(--orange); background: #fff; display: grid; place-items: center; padding: 0; }
+.cam-shutter span { width: 50px; height: 50px; border-radius: 50%; background: var(--orange); transition: transform .12s; }
+.cam-shutter:active span { transform: scale(.85); }
+.cam-shutter:disabled { opacity: .4; }
+.cam-spacer { width: 1px; }
+.cam-msg { display: flex; gap: 12px; align-items: flex-start; color: var(--orange-deep); }
+.cam-msg b { color: var(--ink); } .cam-msg .hstack { margin-top: 8px; }
+.pp-checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.pp-checks li { display: flex; align-items: center; gap: 8px; font-size: var(--fs-s); font-weight: 600; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-m); padding: 8px 10px; animation: oa-rise .3s var(--ease-out) both; }
+.pp-checks li > .ms { color: var(--ink-2); }
+.pp-ci { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; flex: none; background: var(--line); color: #fff; }
+.pp-checks li.ok .pp-ci { background: var(--leaf); }
+.pp-checks li.bad .pp-ci { background: var(--danger); }
+.pp-checks li.warn .pp-ci { background: var(--sun); color: var(--ink); }
+.pp-spin { width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.5); border-top-color: #fff; animation: pp-rot .8s linear infinite; }
+.pp-checks li.pend .pp-ci { background: var(--ink-3); }
+@keyframes pp-rot { to { transform: rotate(360deg); } }
+.pp-fail { display: flex; flex-direction: column; gap: 8px; }
+.pp-fail > b { font: 800 var(--fs-l)/1.2 var(--f-display); color: var(--danger); text-align: center; }
+.pp-demo, .pp-tdemo { position: absolute; left: 10px; top: 10px; background: var(--sun); color: var(--ink); font: 800 var(--fs-xs)/1 var(--f-body); padding: 5px 8px; border-radius: 99px; text-transform: uppercase; letter-spacing: .06em; }
+.pp-tdemo { left: 5px; top: 5px; font-size: 0.6rem; padding: 3px 5px; }
 
 /* ---- art.css ---- */
 /* OnsAms illustrations: ambient motion. Owned by the art agent.
@@ -752,6 +784,8 @@ html:not(.oa-framed) .page { max-width: 640px; margin-inline: auto; }
 .eu-myphoto > .ms { color: var(--orange-deep); }
 .eu-photoview { display: flex; flex-direction: column; gap: 10px; }
 .eu-photoview img { width: 100%; max-height: 60vh; object-fit: cover; border-radius: var(--r-l); }
+/* the photo preview's two buttons fit the ticket card without wrapping */
+.eu-tk-check .pp-actions .btn { padding-inline: 12px; white-space: nowrap; }
 
 /* ---- explore.css ---- */
 /* OnsAms beta: Explore + Nature guide. Owner: explore agent. Every class is prefixed ex-.
@@ -2809,45 +2843,12 @@ html:not(.oa-framed) .page:has(> .ob) { max-width: none; }
   };
 
   /* ---------- photo proof ----------
-     A check-in confirmed by a photo of the place or the achievement. The photo is shrunk on the phone
-     (max 520 px, JPEG) and kept only on this device in state.moments (the 12 most recent); "Start fresh" clears it.
-     In this beta the check is simulated; in the real app the host confirms the photo. */
+     A check-in confirmed by a live photo of the place or the achievement, taken at the place (see ui.Camera and
+     ui.PhotoProof below). The photo is shrunk on the phone (max 520 px, JPEG) and kept only on this device in
+     state.moments (the 12 most recent); "Start fresh" clears it. */
   OA.photos = {
     MAX: 520, KEEP: 12,
-    // Opens the camera or photo library. Resolves a small JPEG data URL, or null if cancelled.
-    pick: function () {
-      if (window.__oaTestPhoto) return Promise.resolve(window.__oaTestPhoto);   // test hook for the headless driver
-      return new Promise(function (resolve) {
-        var inp = document.createElement('input');
-        inp.type = 'file'; inp.accept = 'image/*'; inp.setAttribute('capture', 'environment');
-        inp.style.position = 'fixed'; inp.style.left = '-9999px';
-        var settled = false;
-        inp.onchange = function () {
-          settled = true;
-          var f = inp.files && inp.files[0]; inp.remove();
-          if (!f) return resolve(null);
-          OA.photos.shrink(f).then(resolve, function () { resolve(null); });
-        };
-        // a picker closed without a choice fires no event; give up when the page regains focus
-        window.addEventListener('focus', function onF() { window.removeEventListener('focus', onF); setTimeout(function () { if (!settled) { inp.remove(); resolve(null); } }, 800); });
-        document.body.appendChild(inp); inp.click();
-      });
-    },
-    shrink: function (file) {
-      return new Promise(function (resolve, reject) {
-        var url = URL.createObjectURL(file), img = new Image();
-        img.onload = function () {
-          var k = Math.min(1, OA.photos.MAX / Math.max(img.naturalWidth, img.naturalHeight));
-          var cv = document.createElement('canvas');
-          cv.width = Math.round(img.naturalWidth * k); cv.height = Math.round(img.naturalHeight * k);
-          cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
-          URL.revokeObjectURL(url);
-          try { resolve(cv.toDataURL('image/jpeg', 0.72)); } catch (e) { reject(e); }
-        };
-        img.onerror = function (e) { URL.revokeObjectURL(url); reject(e); };
-        img.src = url;
-      });
-    },
+    // Photos are taken only with the live camera (ui.Camera); there is deliberately no photo-library picker.
     add: function (m) {
       var e = Object.assign({ id: OA.uid('mo'), at: new Date().toISOString(), status: 'confirmed' }, m);
       OA.set({ moments: [e].concat(state.moments || []).slice(0, OA.photos.KEEP) });
@@ -2865,55 +2866,198 @@ html:not(.oa-framed) .page:has(> .ob) { max-width: none; }
     }
   };
 
+  /* ---------- live camera + location: proof that you were there, now ----------
+     The photo is taken in the app with the live camera (no photo library, so no pictures from the internet),
+     and the phone's location is compared with the item's coordinates. Only the distance is saved.
+     Demo mode (the laptop frame, or facilitator mode on a phone) can skip the location check, for pitches and tests.
+     Test hooks for the headless driver: window.__oaTestPhoto (data URL), window.__oaTestLocation ({lat, lon}). */
+  OA.geo.distance = function (a, b) {
+    var R = 6371000, toR = Math.PI / 180;
+    var dLat = (b.lat - a.lat) * toR, dLon = (b.lon - a.lon) * toR;
+    var h = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(a.lat * toR) * Math.cos(b.lat * toR) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    return Math.round(2 * R * Math.asin(Math.sqrt(h)));
+  };
+  OA.geo.fmtDist = function (m) { return m < 1000 ? m + ' m' : (m / 1000).toFixed(m < 10000 ? 1 : 0).replace('.', ',') + ' km'; };
+  OA.geo.locate = function () {
+    if (window.__oaTestLocation) return Promise.resolve(window.__oaTestLocation);
+    if (window.__oaTestPhoto) return Promise.resolve({ test: true });
+    return new Promise(function (resolve, reject) {
+      if (!navigator.geolocation) return reject({ code: 'unavailable' });
+      navigator.geolocation.getCurrentPosition(function (p) { resolve({ lat: p.coords.latitude, lon: p.coords.longitude, acc: p.coords.accuracy }); },
+        function (e) { reject({ code: e && e.code === 1 ? 'denied' : 'unavailable' }); },
+        { enableHighAccuracy: true, timeout: 12000, maximumAge: 30000 });
+    });
+  };
+  OA.demoMode = function () { return OA.facilitator.on() || document.documentElement.classList.contains('oa-framed'); };
+  // A stand-in photo for demos without a camera (laptop, artifact viewer): the item's illustration as a JPEG.
+  OA.photos.demo = function (item) {
+    return new Promise(function (resolve) {
+      var svg = OA.art((item && item.art) || 'houses', { tone: item && item.tone });
+      var img = new Image();
+      img.onload = function () {
+        var cv = document.createElement('canvas'); cv.width = 520; cv.height = 390;
+        var g = cv.getContext('2d'); g.drawImage(img, 0, 0, 520, 390);
+        g.fillStyle = 'rgba(31,26,23,.72)'; g.fillRect(12, 12, 118, 34); g.fillStyle = '#fff'; g.font = '700 18px sans-serif'; g.fillText('DEMO PHOTO', 22, 36);
+        resolve(cv.toDataURL('image/jpeg', 0.8));
+      };
+      img.onerror = function () { resolve(null); };
+      img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg.replace('<svg ', '<svg width="520" height="390" '));
+    });
+  };
+
+  /* icons: no_photography, videocam_off, theater_comedy, location_off, location_on, priority_high, my_location, ios_share, send, photo_camera, delete, check, close, qr_code_2 */
+  // Live viewfinder. Props: hint, onShot(dataUrl), onCancel(), onDemo() (shown only in demo mode)
+  ui.Camera = function (p) {
+    var vref = useRef(null), streamRef = useRef(null);
+    var st = useState(window.__oaTestPhoto ? 'ready' : 'starting'), phase = st[0], setPhase = st[1];
+    useEffect(function () {
+      if (window.__oaTestPhoto) return;
+      var alive = true;
+      if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) { setPhase('nocam'); return; }
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 960 } }, audio: false })
+        .then(function (s) {
+          if (!alive) { s.getTracks().forEach(function (t) { t.stop(); }); return; }
+          streamRef.current = s; var v = vref.current;
+          if (v) { v.srcObject = s; var pl = v.play(); if (pl && pl.catch) pl.catch(function () {}); }
+          setPhase('ready');
+        })
+        .catch(function (e) { if (alive) setPhase(e && (e.name === 'NotAllowedError' || e.name === 'SecurityError') ? 'denied' : 'nocam'); });
+      return function () { alive = false; if (streamRef.current) streamRef.current.getTracks().forEach(function (t) { t.stop(); }); streamRef.current = null; };
+    }, []);
+    function shoot() {
+      if (window.__oaTestPhoto) return p.onShot(window.__oaTestPhoto);
+      var v = vref.current; if (!v || !v.videoWidth) return;
+      var k = Math.min(1, OA.photos.MAX / Math.max(v.videoWidth, v.videoHeight));
+      var cv = document.createElement('canvas'); cv.width = Math.round(v.videoWidth * k); cv.height = Math.round(v.videoHeight * k);
+      cv.getContext('2d').drawImage(v, 0, 0, cv.width, cv.height);
+      var d = cv.toDataURL('image/jpeg', 0.72);
+      if (streamRef.current) streamRef.current.getTracks().forEach(function (t) { t.stop(); }); streamRef.current = null;
+      OA.haptic(10); p.onShot(d);
+    }
+    if (phase === 'nocam' || phase === 'denied') {
+      return html`<div class="cam-msg card-flat"><${ui.Icon} name=${phase === 'denied' ? 'no_photography' : 'videocam_off'} size=${28}/>
+        <div><b>${phase === 'denied' ? 'Camera access is off' : 'No camera here'}</b>
+        <p class="small muted">${phase === 'denied' ? 'Allow the camera for this site in your browser settings, then try again. Photos are taken live, so a picture from your library cannot be used.' : 'Open OnsAms on your phone to check in with a photo. Photos are taken live, so a picture from your library cannot be used.'}</p>
+        <div class="hstack">${p.onCancel && html`<${ui.Btn} kind="ghost" small onClick=${p.onCancel}>Back</${ui.Btn}>`}
+          ${p.onDemo && OA.demoMode() && html`<${ui.Btn} kind="soft" small icon="theater_comedy" onClick=${p.onDemo}>Demo: use a demo photo</${ui.Btn}>`}</div></div></div>`;
+    }
+    return html`<div class="cam">
+      <div class="cam-view">
+        ${window.__oaTestPhoto ? html`<img class="cam-video" src=${window.__oaTestPhoto} alt=""/>` : html`<video class="cam-video" ref=${vref} playsinline muted autoplay></video>`}
+        ${phase === 'starting' && html`<div class="cam-wait"><${ui.Icon} name="photo_camera" size=${30}/><span>Opening the camera…</span></div>`}
+        <span class="cam-live"><i></i>Live camera</span>
+        ${p.hint && html`<span class="cam-hint">${p.hint}</span>`}
+      </div>
+      <div class="cam-bar">
+        <${ui.Btn} kind="ghost" small onClick=${p.onCancel}>Cancel</${ui.Btn}>
+        <button type="button" class="cam-shutter" aria-label="Take the photo" disabled=${phase !== 'ready'} onClick=${shoot}><span></span></button>
+        ${p.onDemo && OA.demoMode() ? html`<${ui.Btn} kind="ghost" small onClick=${p.onDemo}>Demo photo</${ui.Btn}>` : html`<span class="cam-spacer"></span>`}
+      </div>
+    </div>`;
+  };
+
   // <${ui.PhotoProof} id=${itemId} title=${title} pts=${250} cat="environment" host="Plastic Whale"
-  //    cta="Check in with a photo" hint="Snap the boat, your catch or the canal" alt=${{label, onClick}} onDone=${fn}/>
-  // One flow for every check-in: take a photo -> preview -> "Use this photo" -> a short check -> confirmed, points fly in.
+  //    cta="Check in with a photo" hint="Snap the boat, your catch or the canal" alt=${{label, onClick}} onDone=${fn} radius=${400}/>
+  // One flow for every check-in: live camera -> preview -> "Use this photo" -> checks (taken now; at the right place) -> confirmed.
   // It earns the points itself (OA.points.earn with the photo as origin), marks the item done and saves the moment.
+  // The item's coordinates come from the data (OA.findAny(id)); items without coordinates skip the location check.
   // Note: the item id prop is `id` (Preact reserves `ref`).
   ui.PhotoProof = function (p) {
     var st = useState(p.done || OA.has('done', p.id) ? 'done' : 'idle'), phase = st[0], setPhase = st[1];
     var ph = useState(null), photo = ph[0], setPhoto = ph[1];
-    var imgRef = useRef(null), alive = useRef(true);
+    var ck = useState(null), check = ck[0], setCheck = ck[1];
+    var dm = useState(false), isDemo = dm[0], setDemo = dm[1];
+    var imgRef = useRef(null), alive = useRef(true), locP = useRef(null);
     useEffect(function () { return function () { alive.current = false; }; }, []);
     var pts = p.pts || 0, host = p.host || 'the host';
-    function take() {
-      OA.photos.pick().then(function (d) { if (!alive.current || !d) return; setPhoto(d); setPhase('preview'); });
+    var item = OA.findAny(p.id), spot = item && item.lat != null && item.lon != null ? { lat: item.lat, lon: item.lon } : null;
+    var radius = p.radius || 400, placeName = (item && (item.name || item.host || item.title)) || p.title;
+    function open() {
+      // tests: a test photo skips the viewfinder (window.__oaTestCamera shows it anyway)
+      if (window.__oaTestPhoto && !window.__oaTestCamera) { setPhoto(window.__oaTestPhoto); setDemo(false); setPhase('preview'); locP.current = spot ? OA.geo.locate() : null; if (locP.current) locP.current.catch(function () {}); return; }
+      setPhase('camera');
+      // ask for the location while the camera opens, so both permission prompts come together
+      if (spot) { locP.current = OA.geo.locate(); locP.current.catch(function () {}); }
     }
-    function send() {
+    function shot(d) { if (!alive.current) return; setPhoto(d); setDemo(false); setPhase(window.__oaTestPhoto ? 'preview' : 'preview'); }
+    function demoShot() { OA.photos.demo(item).then(function (d) { if (alive.current && d) { setPhoto(d); setDemo(true); setPhase('preview'); } }); }
+    function confirm(result) {
+      setPhase('confirmed');
+      var m = OA.photos.add({ ref: p.id, title: p.title, pts: pts, cat: p.cat || 'community', photo: photo, takenAt: new Date().toISOString(), distance: result.distance, demo: isDemo || result.skipped || false });
+      if (pts) OA.points.earn({ ref: p.id, title: p.title, pts: pts, cat: p.cat || 'community', label: p.label || 'confirmed by photo', from: imgRef.current });
+      if (p.id) OA.markDone(p.id);
+      if (p.onDone) p.onDone(m);
+    }
+    function send(skipLocation) {
       setPhase('checking');
-      setTimeout(function () {
-        if (!alive.current) return;
-        setPhase('confirmed');
-        var m = OA.photos.add({ ref: p.id, title: p.title, pts: pts, cat: p.cat || 'community', photo: photo });
-        if (pts) OA.points.earn({ ref: p.id, title: p.title, pts: pts, cat: p.cat || 'community', label: p.label || 'confirmed by photo', from: imgRef.current });
-        if (p.id) OA.markDone(p.id);
-        if (p.onDone) p.onDone(m);
-      }, OA.reducedMotion() ? 300 : 1500);
+      var t0 = Date.now();
+      var loc = !spot ? Promise.resolve({ none: true }) : skipLocation ? Promise.resolve({ skipped: true }) : (locP.current || OA.geo.locate());
+      loc.then(function (pos) {
+        var r = { ok: true };
+        if (pos.none) r.place = 'none';
+        else if (pos.skipped) { r.place = 'skipped'; r.skipped = true; }
+        else if (pos.test) r.place = 'test';
+        else { r.distance = OA.geo.distance(pos, spot); r.ok = r.distance <= radius + Math.min(150, pos.acc || 0); r.place = r.ok ? 'near' : 'far'; }
+        return r;
+      }, function (e) { return { ok: false, place: e && e.code === 'denied' ? 'denied' : 'unknown' }; })
+      .then(function (r) {
+        setTimeout(function () {
+          if (!alive.current) return;
+          setCheck(r);
+          if (r.ok) setTimeout(function () { if (alive.current) confirm(r); }, OA.reducedMotion() ? 200 : 650);
+          else setPhase('failed');
+        }, Math.max(0, (OA.reducedMotion() ? 300 : 1300) - (Date.now() - t0)));
+      });
+    }
+    function checksList(r) {
+      var rows = [{ ok: !isDemo, warn: isDemo, icon: 'photo_camera', text: isDemo ? 'Demo photo (no camera on this device)' : 'Taken just now with the live camera' }];
+      if (spot) {
+        if (!r) rows.push({ pending: true, icon: 'location_on', text: 'Checking where you are…' });
+        else if (r.place === 'near') rows.push({ ok: true, icon: 'location_on', text: 'At ' + placeName + ' (' + OA.geo.fmtDist(r.distance) + ')' });
+        else if (r.place === 'far') rows.push({ ok: false, icon: 'location_on', text: OA.geo.fmtDist(r.distance) + ' from ' + placeName });
+        else if (r.place === 'denied') rows.push({ ok: false, icon: 'location_off', text: 'Location not shared' });
+        else if (r.place === 'unknown') rows.push({ ok: false, icon: 'location_off', text: 'Could not find your location' });
+        else if (r.place === 'skipped') rows.push({ warn: true, icon: 'location_on', text: 'Demo: location check skipped' });
+        else if (r.place === 'test') rows.push({ ok: true, icon: 'location_on', text: 'Location check (test run)' });
+      }
+      return html`<ul class="pp-checks">${rows.map(function (x) {
+        return html`<li class=${cx(x.pending && 'pend', x.ok && 'ok', x.warn && 'warn', !x.pending && !x.ok && !x.warn && 'bad')}>
+          <span class="pp-ci">${x.pending ? html`<i class="pp-spin"></i>` : html`<${ui.Icon} name=${x.ok ? 'check' : x.warn ? 'priority_high' : 'close'} size=${16}/>`}</span>
+          <${ui.Icon} name=${x.icon} size=${18}/><span>${x.text}</span></li>`;
+      })}</ul>`;
     }
     var latest = (OA.get().moments || []).filter(function (m) { return m.ref === p.id; })[0];
     if (phase === 'done' || phase === 'confirmed') {
       var shown = phase === 'confirmed' ? photo : latest && latest.photo;
+      var meta = phase === 'confirmed' ? check : latest;
       return html`<div class=${cx('pp', 'pp-done', p.class)}>
-        ${shown ? html`<div class="pp-photo"><img src=${shown} alt=${'Your photo: ' + p.title} ref=${imgRef}/><span class="pp-ok"><${ui.Success} size=${44}/></span></div>`
+        ${shown ? html`<div class="pp-photo"><img src=${shown} alt=${'Your photo: ' + p.title} ref=${imgRef}/><span class="pp-ok"><${ui.Success} size=${44}/></span>
+          ${(isDemo || (latest && latest.demo && phase === 'done')) && html`<span class="pp-demo">Demo</span>`}</div>`
                 : html`<div class="pp-donerow"><${ui.Success} size=${36}/></div>`}
         <div class="pp-msg"><b>${phase === 'confirmed' ? 'Confirmed. ' : 'Done. '}${pts ? '+' + OA.fmt.pts(pts) + ' pts' : ''}</b>
-          <span>${shown ? 'Saved in Your moments on this phone.' : 'You already checked in here.'}</span></div>
+          <span>${shown ? (meta && meta.distance != null ? 'Taken ' + OA.geo.fmtDist(meta.distance) + ' from ' + placeName + '. ' : '') + 'Saved in Your moments on this phone.' : 'You already checked in here.'}</span></div>
         ${shown && OA.photos.canShare() && html`<${ui.Btn} kind="soft" small icon="ios_share" onClick=${function () { OA.photos.share({ photo: shown, title: p.title }); }}>Share your moment</${ui.Btn}>`}
       </div>`;
     }
-    if (phase === 'preview' || phase === 'checking') {
+    if (phase === 'camera') {
+      return html`<div class=${cx('pp', p.class)}><${ui.Camera} hint=${p.hint} onShot=${shot} onCancel=${function () { setPhase('idle'); }} onDemo=${demoShot}/></div>`;
+    }
+    if (phase === 'preview' || phase === 'checking' || phase === 'failed') {
       return html`<div class=${cx('pp', p.class)}>
-        <div class=${cx('pp-photo', phase === 'checking' && 'pp-scan')}><img src=${photo} alt="Your photo" ref=${imgRef}/>${phase === 'checking' && html`<i class="pp-line" aria-hidden="true"></i>`}</div>
-        ${phase === 'checking'
-          ? html`<div class="pp-msg" role="status"><b>Checking your photo…</b><span>Matching it to ${p.title}</span></div>`
-          : html`<div class="pp-actions"><${ui.Btn} kind="ghost" icon="photo_camera" onClick=${take}>Retake</${ui.Btn}>
-              <${ui.Btn} kind="primary" icon="send" onClick=${send}>Use this photo</${ui.Btn}></div>`}
-        <p class="pp-note">Beta: photos are checked automatically and stay on this phone. In the real app ${host} confirms them. Ask before you photograph people.</p>
+        <div class=${cx('pp-photo', phase === 'checking' && 'pp-scan')}><img src=${photo} alt="Your photo" ref=${imgRef}/>${phase === 'checking' && html`<i class="pp-line" aria-hidden="true"></i>`}${isDemo && html`<span class="pp-demo">Demo</span>`}</div>
+        ${phase === 'preview' && html`<div class="pp-actions"><${ui.Btn} kind="ghost" icon="photo_camera" onClick=${open}>Retake</${ui.Btn}>
+              <${ui.Btn} kind="primary" icon="send" onClick=${function () { send(false); }}>Use this photo</${ui.Btn}></div>`}
+        ${phase === 'checking' && html`<div class="pp-msg" role="status"><b>Checking your photo…</b></div>${checksList(check)}`}
+        ${phase === 'failed' && html`<div class="pp-fail" role="alert"><b>Not confirmed yet</b>${checksList(check)}
+          <p class="small">${check && check.place === 'far' ? 'Check in when you are at ' + placeName + '. The photo and the place have to match.' : 'OnsAms needs your location once, to confirm you are at ' + placeName + '. Only the distance is saved.'}</p>
+          <div class="hstack"><${ui.Btn} kind="primary" small icon="my_location" onClick=${function () { locP.current = null; send(false); }}>Try again</${ui.Btn}>
+            ${OA.demoMode() && html`<${ui.Btn} kind="soft" small icon="theater_comedy" onClick=${function () { send(true); }}>Demo: skip the location check</${ui.Btn}>`}</div></div>`}
+        <p class="pp-note">The photo is taken live and checked against where you are. It stays on this phone; your location isn't saved, only the distance. In the real app ${host} can also confirm it. Ask before you photograph people.</p>
       </div>`;
     }
     return html`<div class=${cx('pp', p.class)}>
-      <${ui.Btn} kind="primary" full icon="photo_camera" onClick=${take}>${p.cta || 'Check in with a photo'}${pts ? html` <span class="pp-pts">+${OA.fmt.pts(pts)}</span>` : ''}</${ui.Btn}>
-      ${p.hint && html`<p class="pp-hint">${p.hint}</p>`}
+      <${ui.Btn} kind="primary" full icon="photo_camera" onClick=${open}>${p.cta || 'Check in with a photo'}${pts ? html` <span class="pp-pts">+${OA.fmt.pts(pts)}</span>` : ''}</${ui.Btn}>
+      ${p.hint && html`<p class="pp-hint">${p.hint}${spot ? ' Take it there: the app checks you are within ' + radius + ' m.' : ''}</p>`}
       ${p.alt && html`<${ui.Link} onClick=${p.alt.onClick} icon="qr_code_2">${p.alt.label}</${ui.Link}>`}
     </div>`;
   };
@@ -2924,13 +3068,13 @@ html:not(.oa-framed) .page:has(> .ob) { max-width: none; }
     var list = (s.moments || []).slice(0, p.limit || 12);
     if (!list.length) {
       return html`<div class="card-flat pp-empty"><${ui.Icon} name="photo_camera" size=${28}/><div><b>No moments yet</b>
-        <p class="small muted">Check in with a photo at an activity or a place. Your photos stay on this phone.</p>
+        <p class="small muted">Check in with a live photo at an activity or a place. Your photos stay on this phone.</p>
         ${p.onEmpty && html`<${ui.Link} onClick=${p.onEmpty}>Find something to do</${ui.Link}>`}</div></div>`;
     }
     function open(m) {
       OA.nav.sheet(function () {
         return html`<div class="sheet-pad pp-view"><img src=${m.photo} alt=${m.title} class="pp-big"/>
-          <div class="h3">${m.title}</div><p class="small muted">${OA.fmt.day(m.at)} · ${OA.fmt.time(m.at)}${m.pts ? ' · +' + OA.fmt.pts(m.pts) + ' pts' : ''}</p>
+          <div class="h3">${m.title}</div><p class="small muted">${m.demo ? 'Demo · ' : 'Taken live · '}${OA.fmt.day(m.at)} · ${OA.fmt.time(m.at)}${m.distance != null ? ' · ' + OA.geo.fmtDist(m.distance) + ' from the spot' : ''}${m.pts ? ' · +' + OA.fmt.pts(m.pts) + ' pts' : ''}</p>
           <div class="hstack">${OA.photos.canShare() && html`<${ui.Btn} kind="soft" icon="ios_share" onClick=${function () { OA.photos.share(m); }}>Share</${ui.Btn}>`}
             <${ui.Btn} kind="ghost" icon="delete" onClick=${function () { OA.photos.remove(m.id); OA.nav.closeSheet(); }}>Remove photo</${ui.Btn}></div>
           <p class="pp-note">Only on this phone. "Start fresh for the next tester" removes it.</p></div>`;
@@ -2938,7 +3082,7 @@ html:not(.oa-framed) .page:has(> .ob) { max-width: none; }
     }
     return html`<div class="pp-grid oa-stagger">${list.map(function (m) {
       return html`<button type="button" class="pp-tile" onClick=${function () { open(m); }} aria-label=${'Your photo: ' + m.title}>
-        <img src=${m.photo} alt=""/><span class="pp-cap">${m.title}</span>${m.pts ? html`<span class="pp-tpts">+${OA.fmt.pts(m.pts)}</span>` : ''}</button>`;
+        <img src=${m.photo} alt=""/><span class="pp-cap">${m.title}</span>${m.pts ? html`<span class="pp-tpts">+${OA.fmt.pts(m.pts)}</span>` : ''}${m.demo ? html`<span class="pp-tdemo">Demo</span>` : ''}</button>`;
     })}</div>`;
   };
 
