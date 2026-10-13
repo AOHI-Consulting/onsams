@@ -1,6 +1,6 @@
-/* OnsAms offline cache (version 1e15b002a3). Pages: network first, so updates arrive; fonts and the
+/* OnsAms offline cache (version a7b866864f). Pages: network first, so updates arrive; fonts and the
    Preact bundle: cache first. Font files are precached on install so the app also opens offline. */
-const CACHE = 'onsams-1e15b002a3';
+const CACHE = 'onsams-a7b866864f';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-180.png'];
 const EXTERNAL = ["https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700;800&display=swap"];
 self.addEventListener('install', (e) => {
