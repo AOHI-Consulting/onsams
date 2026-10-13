@@ -1373,6 +1373,12 @@ html:not(.oa-framed) .page { max-width: 640px; margin-inline: auto; }
 .fb-tchip.no { background: #F3E9E2; color: var(--ink-2); }
 .fb-tchip .num { opacity: .8; }
 @media (prefers-reduced-motion: reduce) { .fb-taskbar, .fb-tb-t, .fb-tb-done, .fb-task-bar > span { animation: none; } .fb-sess-dot { animation: none; } }
+/* team of the master's programme */
+.fb-team { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+.fb-team-h { font: 700 var(--fs-s)/1.3 var(--f-body); color: var(--ink); }
+.fb-team-chips .chip { white-space: normal; text-align: left; line-height: 1.2; }
+.fb-team-s { font-size: var(--fs-xs); color: var(--ink-3); }
+.fb-teams-sum { flex-wrap: wrap; }
 
 /* ---- home.css ---- */
 /* OnsAms beta: home module styles (v-home, me, impact, about, hotel). Every class is prefixed hm-. */
@@ -5867,6 +5873,19 @@ OA.i18n.add('nl', {
   'Not now': 'Niet nu',
   'Help Team 5 test this': 'Help Team 5 dit te testen'
 });
+OA.i18n.add('nl', {
+  "From the master's programme? Pick your team": 'Van de masteropleiding? Kies je team',
+  'Your team': 'Je team',
+  'Team 1 · Nature & public space': 'Team 1 · Natuur & openbare ruimte',
+  'Team 2 · Hotels': 'Team 2 · Hotels',
+  'Team 3 · Restaurants & food': 'Team 3 · Restaurants & eten',
+  'Team 4 · Visitors & tourism': 'Team 4 · Bezoekers & toerisme',
+  'Team 5 · Residents': 'Team 5 · Bewoners',
+  'Team 6 · Social enterprises & NGOs': "Team 6 · Sociale ondernemingen & ngo's",
+  'Lecturer': 'Docent',
+  'Not in the course? Skip this and pick who you are below.': 'Niet in de opleiding? Sla dit over en kies hieronder wie je bent.',
+  'Teams': 'Teams'
+});
 
 </script>
 <script>/* ---- home.nl.js ---- */
@@ -8508,6 +8527,18 @@ OA.i18n.add('nl', {
     { id: 'other', label: 'Other', short: 'Other', sub: 'Something else', icon: 'person', color: '#8E837C' }
   ];
   var REQ = ROLES.filter(function (r) { return r.req; });
+  // The master's programme: each consultancy team plays one stakeholder group (assignment briefing), plus lecturers.
+  // Picking a team pre-selects the matching stakeholder role (still editable).
+  var TEAMS = [
+    { id: 't1', label: 'Team 1 · Nature & public space', role: 'nature' },
+    { id: 't2', label: 'Team 2 · Hotels', role: 'hospitality' },
+    { id: 't3', label: 'Team 3 · Restaurants & food', role: 'hospitality' },
+    { id: 't4', label: 'Team 4 · Visitors & tourism', role: 'visitor' },
+    { id: 't5', label: 'Team 5 · Residents', role: 'resident' },
+    { id: 't6', label: 'Team 6 · Social enterprises & NGOs', role: 'other' },
+    { id: 'lecturer', label: 'Lecturer', role: null }
+  ];
+  function teamOf(id) { for (var i = 0; i < TEAMS.length; i++) if (TEAMS[i].id === id) return TEAMS[i]; return null; }
   var QS = [
     { id: 'understand', text: 'I understand what OnsAms does', short: 'Understand' },
     { id: 'use', text: 'I would use it', short: 'Would use' },
@@ -8648,7 +8679,7 @@ OA.i18n.add('nl', {
   function ping() { OA.set({}); } // re-render everything that reads the store (counts, the note button, the task banner)
 
   /* ---------- module state: the tester's draft, the facilitator's notes, the test session ---------- */
-  function blank() { return { role: null, name: '', ratings: {}, comments: { like: '', stop: '', change: '' }, quoteOk: false }; }
+  function blank() { return { team: null, role: null, name: '', ratings: {}, comments: { like: '', stop: '', change: '' }, quoteOk: false }; }
   // The draft lives outside the screen, so a stray tap on Back (or anything else) never loses typed answers.
   var draft = blank();
   function clearDraft() { draft = blank(); }
@@ -8872,7 +8903,7 @@ OA.i18n.add('nl', {
       var comments = {};
       OPEN.forEach(function (o) { comments[o.id] = (f.comments[o.id] || '').trim(); });
       var e = OA.fb.save({
-        role: f.role, name: (f.name || '').trim().slice(0, 40), ratings: Object.assign({}, f.ratings),
+        role: f.role, team: f.team || null, name: (f.name || '').trim().slice(0, 40), ratings: Object.assign({}, f.ratings),
         comments: comments, quoteOk: !!f.quoteOk, appRole: OA.get().role || null, notes: takeNotes(), tasks: takeTasks()
       });
       clearDraft();
@@ -8893,6 +8924,15 @@ OA.i18n.add('nl', {
 
       <section class="fb-sec" id="fb-sec-role">
         <h2 class="fb-st"><span class="fb-n">1</span>${T('Who are you?')}</h2>
+        <div class="fb-team">
+          <div class="fb-team-h">${T('From the master\'s programme? Pick your team')}</div>
+          <div class="chips fb-team-chips" role="radiogroup" aria-label=${T('Your team')}>${TEAMS.map(function (t) {
+            var on = f.team === t.id;
+            return html`<button type="button" role="radio" aria-checked=${on ? 'true' : 'false'} data-team=${t.id} class=${cx('chip', on && 'on')}
+              onClick=${function () { upd(on ? { team: null } : Object.assign({ team: t.id }, t.role && (!f.role || (teamOf(f.team) && teamOf(f.team).role === f.role)) ? { role: t.role } : {})); }}>${T(t.label)}</button>`;
+          })}</div>
+          <p class="fb-team-s">${T('Not in the course? Skip this and pick who you are below.')}</p>
+        </div>
         <div class="fb-roles" role="radiogroup" aria-label=${T('Who are you?')}>
           ${ROLES.map(function (r) {
             var on = f.role === r.id;
@@ -8943,7 +8983,7 @@ OA.i18n.add('nl', {
   function taskLine(t) { return (t.ok ? 'done' : 'not done') + ' in ' + fmtSecs(t.secs) + (t.ok ? (t.auto ? ', detected' : ', marked by the facilitator') : ''); }
   function entryText(e) {
     var L = [], r = roleOf(e.role);
-    L.push('OnsAms feedback' + (e.name ? ' from ' + e.name : '') + ' (' + r.label + ', ' + enWhen(e.at) + ')');
+    L.push('OnsAms feedback' + (e.name ? ' from ' + e.name : '') + ' (' + r.label + (teamOf(e.team) ? ', ' + teamOf(e.team).label : '') + ', ' + enWhen(e.at) + ')');
     L.push('');
     L.push('Scores, 1 to 5:');
     QS.forEach(function (q) { var v = rating(e, q.id); L.push('- ' + q.text + ': ' + (v || '-')); });
@@ -9052,6 +9092,13 @@ OA.i18n.add('nl', {
       <div class="fb-others"><span class="fb-others-h">${T('Also')}</span>${others.map(function (r) {
         return html`<span class="fb-who" style=${'--rc:' + r.color}><i></i>${T(r.short)} <b>${c[r.id]}</b></span>`;
       })}</div>
+      ${(function () {
+        var tc = {}; list.forEach(function (e) { if (e.team) tc[e.team] = (tc[e.team] || 0) + 1; });
+        var shown = TEAMS.filter(function (t) { return tc[t.id]; });
+        return shown.length ? html`<div class="fb-others fb-teams-sum"><span class="fb-others-h">${T('Teams')}</span>${shown.map(function (t) {
+          return html`<span class="fb-who"><i></i>${T(t.label)} <b>${tc[t.id]}</b></span>`;
+        })}</div>` : null;
+      })()}
     </div>`;
   }
 
@@ -9234,7 +9281,7 @@ OA.i18n.add('nl', {
     return html`<div class=${cx('fb-ent', p.confirming && 'confirming')} data-id=${e.id}>
       <div class="fb-ent-top">
         <span class="fb-ent-who"><span class="fb-ent-ic" style=${'--rc:' + r.color}><${ui.Icon} name=${r.icon} fill size=${18}/></span>
-          <span class="fb-ent-txt"><b>${e.name || T('Anonymous')}</b><span>${T(r.label)} · ${when(e.at)}</span></span></span>
+          <span class="fb-ent-txt"><b>${e.name || T('Anonymous')}</b><span>${T(r.label)}${teamOf(e.team) ? ' · ' + T(teamOf(e.team).label) : ''} · ${when(e.at)}</span></span></span>
         <button type="button" class="fb-del iconbtn" aria-label=${e.name ? T('Delete the entry from {name}', { name: e.name }) : T('Delete this entry')} onClick=${p.onAsk}><${ui.Icon} name="delete"/></button>
       </div>
       <div class="fb-ent-scores">${QS.map(function (q) {
@@ -9282,6 +9329,12 @@ OA.i18n.add('nl', {
     ROLES.forEach(function (r) {
       L.push('- ' + r.label + ': ' + c[r.id] + (r.req ? (c[r.id] ? ' (required group, tested)' : ' (required group, STILL NEEDED)') : ''));
     });
+    var tcount = {}; list.forEach(function (e) { if (e.team) tcount[e.team] = (tcount[e.team] || 0) + 1; });
+    if (Object.keys(tcount).length) {
+      L.push('');
+      L.push('BY TEAM (master\'s programme)');
+      TEAMS.forEach(function (t) { if (tcount[t.id]) L.push('- ' + t.label + ': ' + tcount[t.id]); });
+    }
     L.push('');
     L.push('AVERAGE SCORES (1 = ' + LOW.toLowerCase() + ', 5 = ' + HIGH.toLowerCase() + ')');
     QS.forEach(function (q) {
@@ -9761,7 +9814,8 @@ OA.i18n.add('nl', {
     startSession: startSession,
     endSession: function () { endSession(false); },
     report: function () { return reportText(OA.fb.all().sort(byNewest)); },
-    entryText: entryText
+    entryText: entryText,
+    teams: TEAMS
   };
 
   OA.screen('feedback', FeedbackScreen, { tab: 'me', bar: false, title: 'Give feedback' });
