@@ -401,8 +401,10 @@ body { background: var(--cream); }
 /* Both faces share one grid cell, so the card grows to its taller face (Dutch, bigger text, long names) instead of clipping. */
 .oa-flip-inner { position: relative; display: grid; transform-style: preserve-3d; transition: transform 600ms cubic-bezier(.45, .05, .2, 1); }
 .oa-flip.flipped .oa-flip-inner { transform: rotateY(180deg); }
-.oa-flip-front, .oa-flip-back { grid-area: 1 / 1; min-width: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: visibility 0s linear 300ms; }
-/* Safari can paint a face's layered children through backface-visibility, so the turned-away face is also hidden at mid-turn. */
+.oa-flip-front, .oa-flip-back { grid-area: 1 / 1; min-width: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: visibility 0s linear 217ms; }
+/* Safari can paint a face's layered children through backface-visibility, so the turned-away face is also hidden, exactly when
+   the card is edge-on: with this easing the turn reaches 90 degrees at 217 of its 600 ms (not halfway). A later swap leaves
+   both faces hidden for a moment, which reads as a blink. Change both numbers together. */
 .oa-flip-back { transform: rotateY(180deg); visibility: hidden; }
 .oa-flip.flipped .oa-flip-back { visibility: visible; }
 .oa-flip.flipped .oa-flip-front { visibility: hidden; }
