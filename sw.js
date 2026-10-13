@@ -26,7 +26,12 @@ self.addEventListener('fetch', (e) => {
   const req = e.request; if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin === location.origin) {
-    e.respondWith(fetch(req).then((r) => { const copy = r.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); return r; })
+    // no-cache: revalidate with the server (a cheap 304), so a new publish shows up at once instead of
+    // after Pages' 10-minute browser cache. A navigate-mode Request can't take init options, so fetch by URL.
+    const fresh = req.mode === 'navigate'
+      ? fetch(req.url, { cache: 'no-cache', credentials: 'same-origin' }).then((r) => (r.redirected ? fetch(req) : r))
+      : fetch(req, { cache: 'no-cache' });
+    e.respondWith(fresh.then((r) => { const copy = r.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); return r; })
       .catch(() => caches.match(req, { ignoreSearch: true }).then((r) => r || caches.match('./index.html'))));
     return;
   }
